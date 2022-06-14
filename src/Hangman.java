@@ -21,7 +21,7 @@ public class Hangman {
                 | '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' || '--------------' |
                  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'  '----------------'\s
                  
-                 Press 0 to begin, or X to exit game""");
+                 Press 0 to begin, or any key to exit game""");
     }
 
     /**
@@ -217,6 +217,7 @@ public class Hangman {
 
     public static void main(String[] args) throws FileNotFoundException {
         boolean lose = false;
+        boolean win = false;
 
         // Print title screen
         titleScreen();
@@ -224,43 +225,38 @@ public class Hangman {
         Scanner user = new Scanner(System.in);
         String userSelection = user.nextLine();
 
-        while (!Objects.equals(userSelection, "X") && !lose){
-            // If input is 0, start game
-            if (userSelection.equals("0")){
-                // Set lives to full
-                int lives = 6;
-                // Create empty guess list
-                ArrayList<Character> guesses;
-                guesses = new ArrayList<>();
-                // Draw hangman
-                drawHangman(lives);
-                // Select word
-                String word = getWord();
-                // Draw board
-                StringBuilder board = drawBoard(guesses, word);
-                System.out.println(board);
+        // If input is 0, start game
+        while (userSelection.equals("0")){
+            // Set lives to full
+            int lives = 6;
+            // Create empty guess list
+            ArrayList<Character> guesses;
+            guesses = new ArrayList<>();
+            // Draw hangman
+            drawHangman(lives);
+            // Select word
+            String word = getWord();
+            // Draw board
+            StringBuilder board = drawBoard(guesses, word);
+            System.out.println(board);
 
+            // User makes play
+            char newGuess = getPlay(guesses);
+            // Update life counter according to guess correctness
+            lives = checkGuess(newGuess, lives, word);
+
+            while ((!lose) && (!win)){
                 // User makes play
-                char newGuess = getPlay(guesses);
+                newGuess = getPlay(guesses);
                 // Update life counter according to guess correctness
                 lives = checkGuess(newGuess, lives, word);
 
-                // If lives are equal to 0, play lose screen and exit game
+                // If lives are equal to 0, play lose screen
                 if (lives == 0){
                     lossScreen(word);
                     lose = true;
                 }
-
-
-
             }
-            // If input is invalid (not 0 or X), print message requesting proper input
-            else{
-                System.out.println("Please enter either 0 or X");
-            }
-
-            // Get input from user
-            userSelection = user.nextLine();
         }
 
         user.close();
