@@ -151,9 +151,9 @@ public class Hangman {
     /**
      * Gets new character guess from user
      * @param guesses Arraylist of chars user has guessed during game
-     * @return updated list of guesses
+     * @return char guessed by user
      */
-    private static ArrayList<Character> getPlay(ArrayList<Character> guesses){
+    private static char getPlay(ArrayList<Character> guesses){
         // Print previous guesses
         System.out.println("Previous guesses: " + guesses);
 
@@ -172,7 +172,7 @@ public class Hangman {
         // Update guess list
         guesses.add(newGuess);
 
-        return guesses;
+        return newGuess;
     }
 
     public static void main(String[] args) throws FileNotFoundException {
@@ -199,7 +199,8 @@ public class Hangman {
                 System.out.println(board);
 
                 // User makes play
-                getPlay(guesses);
+                char newGuess = getPlay(guesses);
+
 
             }
             // If input is invalid (not 0 or X), print message requesting proper input
