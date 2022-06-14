@@ -180,8 +180,9 @@ public class Hangman {
      * @param newGuess Character guess
      * @param lives Number of lives user has remaining
      * @param word Word user is attempting to guess
+     * @return updated lives count
      */
-    private static void checkGuess(char newGuess, int lives, String word){
+    private static int checkGuess(char newGuess, int lives, String word){
         int guessAppearance = 0;
 
         // Check how many times user guess appears in the word
@@ -196,16 +197,34 @@ public class Hangman {
             lives -= 1;
         }
 
+        return lives;
+
+    }
+
+    private static void lossScreen(String word){
+        System.out.println("""
+                ▀▄    ▄ ████▄   ▄       █    ████▄    ▄▄▄▄▄   ▄███▄     ▄\s
+                  █  █  █   █    █      █    █   █   █     ▀▄ █▀   ▀   █ \s
+                   ▀█   █   █ █   █     █    █   █ ▄  ▀▀▀▀▄   ██▄▄    █  \s
+                   █    ▀████ █   █     ███▄ ▀████  ▀▄▄▄▄▀    █▄   ▄▀ █  \s
+                 ▄▀           █▄ ▄█         ▀                 ▀███▀      \s
+                               ▀▀▀                                    ▀  \s
+                                                                        \s
+                
+                """);
+        System.out.println("The word was: " + word);
     }
 
     public static void main(String[] args) throws FileNotFoundException {
+        boolean lose = false;
+
         // Print title screen
         titleScreen();
         // Get input from user
         Scanner user = new Scanner(System.in);
         String userSelection = user.nextLine();
 
-        while (!Objects.equals(userSelection, "X")){
+        while (!Objects.equals(userSelection, "X") && !lose){
             // If input is 0, start game
             if (userSelection.equals("0")){
                 // Set lives to full
@@ -224,7 +243,14 @@ public class Hangman {
                 // User makes play
                 char newGuess = getPlay(guesses);
                 // Update life counter according to guess correctness
-                checkGuess(newGuess, lives, word);
+                lives = checkGuess(newGuess, lives, word);
+
+                // If lives are equal to 0, play lose screen and exit game
+                if (lives == 0){
+                    lossScreen(word);
+                    lose = true;
+                }
+
 
 
             }
