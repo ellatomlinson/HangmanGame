@@ -175,6 +175,29 @@ public class Hangman {
         return newGuess;
     }
 
+    /**
+     * Checks if users guess appears in the word
+     * @param newGuess Character guess
+     * @param lives Number of lives user has remaining
+     * @param word Word user is attempting to guess
+     */
+    private static void checkGuess(char newGuess, int lives, String word){
+        int guessAppearance = 0;
+
+        // Check how many times user guess appears in the word
+        for (int i = 0; i < word.length(); i++){
+                if (word.charAt(i) == newGuess){
+                    guessAppearance ++;
+                }
+        }
+
+        // If guess never appears, subtract a life
+        if (guessAppearance == 0){
+            lives -= 1;
+        }
+
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         // Print title screen
         titleScreen();
@@ -200,6 +223,8 @@ public class Hangman {
 
                 // User makes play
                 char newGuess = getPlay(guesses);
+                // Update life counter according to guess correctness
+                checkGuess(newGuess, lives, word);
 
 
             }
