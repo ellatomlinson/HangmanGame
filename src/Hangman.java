@@ -300,6 +300,10 @@ public class Hangman {
                 board = drawBoard(guesses, word);
                 win = checkWin(board);
             }
+
+            // Get new input
+            System.out.println("Press 0 to play again, or any key to exit");
+            userSelection = user.nextLine();
         }
 
         user.close();
