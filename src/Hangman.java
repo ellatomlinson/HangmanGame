@@ -215,6 +215,38 @@ public class Hangman {
         System.out.println("The word was: " + word);
     }
 
+    /**
+     * Checks if user has won
+     * @param board StringBuilder containing the completed board at current game stage
+     * @return boolean value of whether user has won or not
+     */
+    private static boolean checkWin(StringBuilder board){
+        boolean win = true;
+
+        for (int i = 0; i < board.length(); i++){
+            char currentChar = board.charAt(i);
+            String currentLetter = Character.toString(currentChar);
+
+            if (currentLetter.equals("_")){
+                win = false;
+            }
+
+        }
+
+        if (win){
+            System.out.println("""
+                    ____    ____  ______    __    __     ____    __    ____  __  .__   __.  __ \s
+                    \\   \\  /   / /  __  \\  |  |  |  |    \\   \\  /  \\  /   / |  | |  \\ |  | |  |\s
+                     \\   \\/   / |  |  |  | |  |  |  |     \\   \\/    \\/   /  |  | |   \\|  | |  |\s
+                      \\_    _/  |  |  |  | |  |  |  |      \\            /   |  | |  . `  | |  |\s
+                        |  |    |  `--'  | |  `--'  |       \\    /\\    /    |  | |  |\\   | |__|\s
+                        |__|     \\______/   \\______/         \\__/  \\__/     |__| |__| \\__| (__)\s
+                                                                                               \s""");
+        }
+
+        return win;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         boolean lose = false;
         boolean win = false;
@@ -256,6 +288,13 @@ public class Hangman {
                     lossScreen(word);
                     lose = true;
                 }
+
+                // Draw board
+                board = drawBoard(guesses, word);
+                System.out.println(board);
+
+                // Check for win
+                win = checkWin(board);
             }
         }
 
