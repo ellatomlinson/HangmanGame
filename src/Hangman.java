@@ -1,3 +1,6 @@
+import java.util.Objects;
+import java.util.Scanner;
+
 public class Hangman {
 
     /**
@@ -21,7 +24,27 @@ public class Hangman {
     }
 
     public static void main(String[] args){
+        // Print title screen
         titleScreen();
+        // Get input from user
+        Scanner user = new Scanner(System.in);
+        String userSelection = user.nextLine();
+
+        while (!Objects.equals(userSelection, "X")){
+            // If input is 0, start game
+            if (userSelection.equals("0")){
+                System.out.println("Start game");
+            }
+            // If input is invalid (not 0 or X), print message requesting proper input
+            else{
+                System.out.println("Please enter either 0 or X");
+            }
+
+            // Get input from user
+            userSelection = user.nextLine();
+        }
+
+        user.close();
     }
 
 }
