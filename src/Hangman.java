@@ -1,5 +1,6 @@
-import java.util.Objects;
-import java.util.Scanner;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.*;
 
 public class Hangman {
 
@@ -92,7 +93,35 @@ public class Hangman {
         System.out.println(hangman);
     }
 
-    public static void main(String[] args){
+    /**
+     * Generates random word of length greater than 3
+     * @return String word
+     */
+    private static String getWord() throws FileNotFoundException {
+        // Create scanner for words list txt file
+        Scanner fileReader = new Scanner(new File("words_alpha.txt"));
+        // Create arraylist for words
+        List<String> wordList = new ArrayList<>();
+
+        // Input words into arrayList
+        while (fileReader.hasNext()){
+            wordList.add(fileReader.nextLine());
+        }
+
+        // Retrieve random word from wordList
+        Random r = new Random();
+        String word = wordList.get(r.nextInt(wordList.size()));
+
+        // If word length is greater than 3, return word, if not, generate new word
+        while (word.length() < 3){
+            r = new Random();
+            word = wordList.get(r.nextInt(wordList.size()));
+        }
+
+        return word;
+    }
+
+    public static void main(String[] args) throws FileNotFoundException {
         // Print title screen
         titleScreen();
         // Get input from user
@@ -107,6 +136,7 @@ public class Hangman {
                 // Draw hangman
                 drawHangman(lives);
                 // Select word
+                String word = getWord();
                 // Draw board
             }
             // If input is invalid (not 0 or X), print message requesting proper input
