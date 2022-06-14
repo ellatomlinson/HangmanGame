@@ -121,6 +121,33 @@ public class Hangman {
         return word;
     }
 
+    /**
+     * Creates the hangman board, with certain letters hidden/revealed depending on users guesses
+     * @param guesses ArrayList of chars, containing user's guesses
+     * @param word String, the word the user is attempting to guess
+     * @return StringBuilder containing the completed board at current game stage
+     */
+    private static StringBuilder drawBoard(ArrayList<Character> guesses, String word){
+        StringBuilder board = new StringBuilder("");
+
+        // Loop through each char in word
+        for (int i = 0; i < word.length(); i++){
+            char wordLetter = word.charAt(i);
+
+            // If user has guessed char, reveal letter in board
+            if (guesses.contains(wordLetter)){
+                board.append(wordLetter).append(" ");
+            }
+            // If user has not guessed char, keep letter hidden as an underscore
+            else
+                board.append("_").append(" ");
+
+        }
+
+        // Return final board
+        return board;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         // Print title screen
         titleScreen();
@@ -133,11 +160,17 @@ public class Hangman {
             if (userSelection.equals("0")){
                 // Set lives to full
                 int lives = 6;
+                // Create empty guess list
+                ArrayList<Character> guesses;
+                guesses = new ArrayList<>();
                 // Draw hangman
                 drawHangman(lives);
                 // Select word
                 String word = getWord();
                 // Draw board
+                StringBuilder board = drawBoard(guesses, word);
+                System.out.println(board);
+
             }
             // If input is invalid (not 0 or X), print message requesting proper input
             else{
