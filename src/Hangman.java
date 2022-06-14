@@ -261,6 +261,9 @@ public class Hangman {
         while (userSelection.equals("0")){
             // Set lives to full
             int lives = 6;
+            // Reset win and lose status
+            lose = false;
+            win = false;
             // Create empty guess list
             ArrayList<Character> guesses;
             guesses = new ArrayList<>();
