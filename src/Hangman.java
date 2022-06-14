@@ -278,6 +278,13 @@ public class Hangman {
             lives = checkGuess(newGuess, lives, word);
 
             while ((!lose) && (!win)){
+                // Draw hangman
+                drawHangman(lives);
+
+                // Draw board
+                board = drawBoard(guesses, word);
+                System.out.println(board);
+
                 // User makes play
                 newGuess = getPlay(guesses);
                 // Update life counter according to guess correctness
@@ -289,11 +296,8 @@ public class Hangman {
                     lose = true;
                 }
 
-                // Draw board
-                board = drawBoard(guesses, word);
-                System.out.println(board);
-
                 // Check for win
+                board = drawBoard(guesses, word);
                 win = checkWin(board);
             }
         }
