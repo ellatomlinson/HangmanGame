@@ -148,6 +148,33 @@ public class Hangman {
         return board;
     }
 
+    /**
+     * Gets new character guess from user
+     * @param guesses Arraylist of chars user has guessed during game
+     * @return updated list of guesses
+     */
+    private static ArrayList<Character> getPlay(ArrayList<Character> guesses){
+        // Print previous guesses
+        System.out.println("Previous guesses: " + guesses);
+
+        // Get next guess input
+        System.out.println("Enter new guess: ");
+        Scanner play = new Scanner(System.in);
+
+        char newGuess = play.nextLine().charAt(0);
+
+        // Ensure guess has not already been guessed
+        while (guesses.contains(newGuess)){
+            System.out.println("Enter new guess: ");
+            newGuess = play.nextLine().charAt(0);
+        }
+
+        // Update guess list
+        guesses.add(newGuess);
+
+        return guesses;
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         // Print title screen
         titleScreen();
@@ -170,6 +197,9 @@ public class Hangman {
                 // Draw board
                 StringBuilder board = drawBoard(guesses, word);
                 System.out.println(board);
+
+                // User makes play
+                getPlay(guesses);
 
             }
             // If input is invalid (not 0 or X), print message requesting proper input
